@@ -1,0 +1,42 @@
+.guessWordCard {
+    background-color: #496b76;
+}
+
+.guessWordCardCorrect {
+    background-color: #3e7c40;
+}
+
+.guessWordCardWrong {
+    background-color: #933c3c;
+}
+
+.guessWordCard, .guessWordCardCorrect, .guessWordCardWrong {
+    text-align: center;
+    font-size: 30px;
+    border-radius: 3px;
+    color: #ffffffd7;
+    text-decoration: none;
+}
+
+.variantButton {
+    background-color: #434460;
+}
+
+.variantButtonCorrect {
+    background-color: #3e7c40;
+}
+
+.variantButtonWrong {
+    background-color: #933c3c;
+}
+
+.variantButtonCorrect, .variantButtonWrong, .variantButton {
+    border: none;
+    color: #ffffffd7;
+    padding: 18px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    border-radius: 3px;
+}

@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.css": "/smartstork/static/css/main.96ce10d2.css",
+    "main.js": "/smartstork/static/js/main.c456c0b2.js",
+    "index.html": "/smartstork/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.96ce10d2.css",
+    "static/js/main.c456c0b2.js"
+  ]
+}
