@@ -22,6 +22,7 @@ interface WordsCouplesDB extends DBSchema {
 export interface DataStorage {
     items: Array<ItemInfo>;
     studiedSectionId: number;
+    save(items: Array<ItemInfo>): Promise<void>;
 }
 
 class DataStorageImpl implements DataStorage {
@@ -44,6 +45,9 @@ class DataStorageImpl implements DataStorage {
             const dbItem = await db.get('words_couple', dbItemKey)
             if (dbItem) {
                 const itemInfo = new ItemInfoImpl(dbItemKey, dbItem.sectionId, dbItem.original, dbItem.expectation);
+                itemInfo.setCorrectAnswersCount(dbItem.correctAnswersCount);
+                itemInfo.setWrongAnswersCount(dbItem.wrongAnswersCount);
+                itemInfo.dataStorage = this
                 newItems.push(itemInfo);
             }
         }

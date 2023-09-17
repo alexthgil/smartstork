@@ -9,6 +9,8 @@ import DataStorageImpl from "./DataStorage";
 
 class AppModel {
 
+    version = "0.1.1"
+
     wDisplayListProxy: WDisplayListProxy = new WDisplayListProxyImpl(new DataStorageImpl())
     sectionsManager: SectionsManager = new SectionsManagerImpl([], 0)
     private linkGame: MakeLinkGame = new MakeLinkGameImpl([])
@@ -62,6 +64,10 @@ class AppModel {
 
     makeLinkGameNextGame(): void {
         this.linkGame.nextGame()
+    }
+
+    currentDataStorage(): DataStorage {
+        return this.dataStorage;
     }
 }
 

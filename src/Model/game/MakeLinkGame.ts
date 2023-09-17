@@ -11,14 +11,11 @@ class MakeLinkGameImpl implements MakeLinkGame {
 
     private items: Array<ItemInfo>
     private currentGameConfig: MakeLinkGameConfig | undefined
-    private shuffledItems: Array<ItemInfo>
-    private itemIndex: number
-    private varientsCount = 4
+    private shuffledItems: Array<ItemInfo> = []
+    private showedGuessedItems: Array<ItemInfo> = []
 
     constructor(items: Array<ItemInfo>) {
         this.items = items
-        this.shuffledItems = items.sort(() => 0.5 - Math.random());
-        this.itemIndex = 0
     }
 
     gameConfig(): MakeLinkGameConfig {
@@ -36,28 +33,60 @@ class MakeLinkGameImpl implements MakeLinkGame {
         this.currentGameConfig = newGC
     }
 
+    nextItem(): ItemInfo | undefined {
+
+        if (this.shuffledItems.length > 0) {
+            return this.shuffledItems.pop();
+        }
+
+        return undefined;
+    }
+
+    regenerateShuffledItems(): void {
+        this.shuffledItems = [...this.items].sort(() => 0.5 - Math.random());
+    }
+
     makeNewGameConfig(): MakeLinkGameConfig {
 
+        const varientsCount = 3
         let gameItems = new Array<ItemInfo>()
+        let guessItem: ItemInfo | undefined = undefined
 
-        const sliceEndItemIndex = this.itemIndex + this.varientsCount
-
-        if (sliceEndItemIndex < this.shuffledItems.length) {
-            gameItems = this.shuffledItems.slice(this.itemIndex, sliceEndItemIndex);
-            this.itemIndex += this.varientsCount
-        } else {
-            gameItems = this.shuffledItems.slice(this.itemIndex, this.shuffledItems.length);
-            this.shuffledItems = this.items.sort(() => 0.5 - Math.random());
-            this.itemIndex = 0
+        if (this.showedGuessedItems.length === this.items.length) {
+            this.showedGuessedItems = [];
         }
 
-        const appendItemsCount = this.varientsCount - gameItems.length
-        for (let index = this.itemIndex; index < appendItemsCount; index++) {
-            gameItems.push(this.shuffledItems[index])
-            this.itemIndex += appendItemsCount
+        if (this.items.length > 0) {
+
+            let index = 0
+            while (index < (this.items.length * 10)) {
+
+                if (this.shuffledItems.length <= 0) {
+                    this.regenerateShuffledItems();
+                }
+
+                const item = this.nextItem();
+                if (item) {
+                    if (this.showedGuessedItems.includes(item) === false) {
+                        if (guessItem === undefined) {
+                            this.showedGuessedItems.push(item);
+                            guessItem = item;
+                            continue;
+                        }
+                    }
+
+                    if (gameItems.length !== varientsCount) {
+                        gameItems.push(item);
+                    }
+                } else {
+                    break;
+                }
+
+                index += 1;
+            }
         }
 
-        const newGameConfig = new MakeLinkGameConfigImpl(gameItems)
+        const newGameConfig = new MakeLinkGameConfigImpl(gameItems, guessItem)
         this.currentGameConfig = newGameConfig
         return newGameConfig
     }

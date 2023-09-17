@@ -35,6 +35,9 @@ const StorageScreen = () => {
                 <div className="p-2">Add .csv file:</div>
                 <input type="file" id="fileInput" onChange={onFileSelected} />
             </Container>
+            <Container>
+                <div>v{model?.version ?? ""}</div>
+            </Container>
         </Container>
     );
 }
