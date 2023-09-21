@@ -12,7 +12,7 @@ class GWNavBar extends Component {
                             <Nav.Link as={NavLink} to="/">Make Link Game</Nav.Link>
                             <Nav.Link as={NavLink} to="/coupleslist">Couples</Nav.Link>
                             <Nav.Link as={NavLink} to="/sections">Sections</Nav.Link>
-                            <Nav.Link as={NavLink} to="/storage">Storage</Nav.Link>
+                            <Nav.Link as={NavLink} to="/storage">Controls</Nav.Link>
                         </Nav>
                     </Container>
                 </Navbar>

@@ -2,9 +2,10 @@ import { describe, expect, test } from '@jest/globals';
 import MakeLinkGameConfigImpl from "./MakeLinkGameConfig"
 import ItemInfoImpl, { ItemInfo } from '../ItemInfo';
 import MakeLinkGameImpl from './MakeLinkGame';
+import { GamePresentationDirection } from '../GamePresentationDirection';
 
 it('1', () => {
-    const config = new MakeLinkGameConfigImpl([], undefined);
+    const config = new MakeLinkGameConfigImpl([], undefined, GamePresentationDirection.OriginalToExpectation);
     expect(config.guess()).toStrictEqual(undefined);
     expect(config.expectation()).toStrictEqual(undefined);
 });
@@ -17,7 +18,7 @@ it('2', () => {
     items.push(new ItemInfoImpl(0, 0, "original_one", "expectation_one"))
     items.push(new ItemInfoImpl(0, 0, "original_two", "expectation_two"))
     items.push(new ItemInfoImpl(0, 0, "original_three", "expectation_three"))
-    const config = new MakeLinkGameConfigImpl(items, guessItem);
+    const config = new MakeLinkGameConfigImpl(items, guessItem, GamePresentationDirection.OriginalToExpectation);
     expect(config.guess()).toStrictEqual(originalStr);
     expect(config.expectation()).toStrictEqual(expertationStr);
 });
@@ -31,7 +32,7 @@ it('3', () => {
         items.push(newItem)
     }
 
-    const makeLinkGame = new MakeLinkGameImpl(items)
+    const makeLinkGame = new MakeLinkGameImpl(items, GamePresentationDirection.OriginalToExpectation)
 
     const guessItems = new Array<ItemInfo>();
 
@@ -62,7 +63,7 @@ it('4', () => {
         items.push(newItem)
     }
 
-    const makeLinkGame = new MakeLinkGameImpl(items)
+    const makeLinkGame = new MakeLinkGameImpl(items, GamePresentationDirection.OriginalToExpectation)
 
     const guessItems = new Array<ItemInfo>();
 
@@ -92,7 +93,7 @@ it('5', () => {
         items.push(newItem)
     }
 
-    const makeLinkGame = new MakeLinkGameImpl(items)
+    const makeLinkGame = new MakeLinkGameImpl(items, GamePresentationDirection.OriginalToExpectation)
 
     const guessItems = new Array<ItemInfo>();
 
@@ -114,7 +115,7 @@ it('5', () => {
 });
 
 it('6', () => {
-    const makeLinkGame = new MakeLinkGameImpl([])
+    const makeLinkGame = new MakeLinkGameImpl([], GamePresentationDirection.OriginalToExpectation)
     const config = makeLinkGame.gameConfig();
     expect(config.checkItem).toStrictEqual(undefined);
     expect(config.expectation()).toStrictEqual(undefined);
@@ -131,7 +132,7 @@ it('Check correctAnswersCount', () => {
         items.push(newItem)
     }
 
-    const makeLinkGame = new MakeLinkGameImpl(items)
+    const makeLinkGame = new MakeLinkGameImpl(items, GamePresentationDirection.OriginalToExpectation)
 
     const guessItems = new Array<ItemInfo>();
 
@@ -168,7 +169,7 @@ it('Check wrongAnswersCount', () => {
         items.push(newItem)
     }
 
-    const makeLinkGame = new MakeLinkGameImpl(items)
+    const makeLinkGame = new MakeLinkGameImpl(items, GamePresentationDirection.OriginalToExpectation)
 
     const guessItems = new Array<ItemInfo>();
 

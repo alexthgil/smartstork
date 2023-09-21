@@ -23,6 +23,7 @@ export interface DataStorage {
     items: Array<ItemInfo>;
     studiedSectionId: number;
     save(items: Array<ItemInfo>): Promise<void>;
+    isEmpty(): boolean;
 }
 
 class DataStorageImpl implements DataStorage {
@@ -30,6 +31,10 @@ class DataStorageImpl implements DataStorage {
     studiedSectionId = 0;
 
     private keySavedStudiedSectionId = 'KEY_Studied_section_Id'
+
+    isEmpty(): boolean {
+        return (this.items.length <= 0);
+    }
 
     async load() {
         const db = await openDB<WordsCouplesDB>('WordsCouplesDB', 1, {

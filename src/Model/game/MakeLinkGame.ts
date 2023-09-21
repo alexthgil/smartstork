@@ -1,3 +1,4 @@
+import { GamePresentationDirectionType } from "../GamePresentationDirection"
 import ItemInfo from "../ItemInfo"
 import MakeLinkGameConfigImpl from "./MakeLinkGameConfig"
 import MakeLinkGameConfig from "./MakeLinkGameConfig"
@@ -13,9 +14,11 @@ class MakeLinkGameImpl implements MakeLinkGame {
     private currentGameConfig: MakeLinkGameConfig | undefined
     private shuffledItems: Array<ItemInfo> = []
     private showedGuessedItems: Array<ItemInfo> = []
+    private presentationDirection: GamePresentationDirectionType
 
-    constructor(items: Array<ItemInfo>) {
+    constructor(items: Array<ItemInfo>, presentationDirection: GamePresentationDirectionType) {
         this.items = items
+        this.presentationDirection = presentationDirection
     }
 
     gameConfig(): MakeLinkGameConfig {
@@ -86,7 +89,7 @@ class MakeLinkGameImpl implements MakeLinkGame {
             }
         }
 
-        const newGameConfig = new MakeLinkGameConfigImpl(gameItems, guessItem)
+        const newGameConfig = new MakeLinkGameConfigImpl(gameItems, guessItem, this.presentationDirection)
         this.currentGameConfig = newGameConfig
         return newGameConfig
     }

@@ -1,3 +1,4 @@
+import { GamePresentationDirection, GamePresentationDirectionType } from "../GamePresentationDirection"
 import ItemInfo from "../ItemInfo"
 
 export interface MakeLinkGameConfig {
@@ -12,17 +13,28 @@ class MakeLinkGameConfigImpl implements MakeLinkGameConfig {
 
     variants: Array<string>
     checkItem: ItemInfo | undefined
+    private direction: GamePresentationDirectionType = GamePresentationDirection.OriginalToExpectation
 
     guess(): string | undefined {
-        return this.checkItem?.original
+        if (this.direction === GamePresentationDirection.OriginalToExpectation) {
+            return this.checkItem?.original
+        } else {
+            return this.checkItem?.expectation
+        }
     }
+
     expectation(): string | undefined {
-        return this.checkItem?.expectation
+        if (this.direction === GamePresentationDirection.OriginalToExpectation) {
+            return this.checkItem?.expectation
+        } else {
+            return this.checkItem?.original
+        }
     }
     
-    constructor(content: Array<ItemInfo>, preparedGuessItem: ItemInfo | undefined) {
+    constructor(content: Array<ItemInfo>, preparedGuessItem: ItemInfo | undefined, presentationDirectionType: GamePresentationDirectionType) {
         this.variants = []
         this.checkItem = preparedGuessItem
+        this.direction = presentationDirectionType
 
         const contentCopy = [...content].sort((a, b) => a.id - b.id)
 
@@ -30,9 +42,17 @@ class MakeLinkGameConfigImpl implements MakeLinkGameConfig {
             
             let variantsContent = Array<string>()
             for (let item of contentCopy) {
-                variantsContent.push(item.expectation ?? '')
+                if (presentationDirectionType === GamePresentationDirection.OriginalToExpectation) {
+                    variantsContent.push(item.expectation ?? '')
+                } else {
+                    variantsContent.push(item.original ?? '')
+                }
             }
-            variantsContent.push(preparedGuessItem.expectation)
+            if (presentationDirectionType === GamePresentationDirection.OriginalToExpectation) {
+                variantsContent.push(preparedGuessItem.expectation)
+            } else {
+                variantsContent.push(preparedGuessItem.original)
+            }
     
             this.variants = variantsContent.sort(() => 0.5 - Math.random());
         }
@@ -40,7 +60,7 @@ class MakeLinkGameConfigImpl implements MakeLinkGameConfig {
 
     onUserDidAnser(title: string, answerCheckCallBack: (isCorrect: boolean) => void, completion: () => void): void {
         if (this.checkItem) {
-            const isCorrectUserAnswer = (this.checkItem.expectation === title)
+            const isCorrectUserAnswer = (this.expectation() === title)
             if (isCorrectUserAnswer) {
                 this.checkItem.incrementCorrectAnswersCount();
             } else {

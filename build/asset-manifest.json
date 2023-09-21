@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/smartstork/static/css/main.96ce10d2.css",
-    "main.js": "/smartstork/static/js/main.c31a7f9b.js",
+    "main.js": "/smartstork/static/js/main.b3689804.js",
     "index.html": "/smartstork/index.html"
   },
   "entrypoints": [
     "static/css/main.96ce10d2.css",
-    "static/js/main.c31a7f9b.js"
+    "static/js/main.b3689804.js"
   ]
 }

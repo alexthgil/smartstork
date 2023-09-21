@@ -8,12 +8,12 @@ import MLGuessCardView from "../components/MakeLinkGame/MLGuessCardView";
 const GWGame = () => {
 
     const { model } = useGlobalContext()
-    const game: MakeLinkGameConfig | undefined = model?.currentMakeLinkGameConfig()
+    const game: MakeLinkGameConfig | undefined = model?.getLinkGame().gameConfig()
 
     if (model) {
         model.onGameDidChange = (() => {
-            const newGame = model.currentMakeLinkGameConfig()
-            setCurrentGame(newGame);
+            const newGameConfig = model.getLinkGame().gameConfig();
+            setCurrentGame(newGameConfig);
         })
     }
 
@@ -29,22 +29,27 @@ const GWGame = () => {
             }, () => {
                 buttonStateCallBack(undefined)
                 setIsCorrect(undefined)
-                model?.makeLinkGameNextGame()
-                const newGame = model?.currentMakeLinkGameConfig()
-                setCurrentGame(newGame)
+                model?.getLinkGame().nextGame()
+                const newGameConfig = model?.getLinkGame().gameConfig();
+                setCurrentGame(newGameConfig)
             });
         }
     };
 
     return (
         <Container>
-            <MLGuessCardView guess={(game?.guess() ?? '')} expectation={(game?.expectation() ?? '')}  
-                isCorrect={isCorrect} />
-            <div className="d-grid gap-2">
-                {game?.variants.map((item, itemIndex) => {
-                    return <MLVariantView key={itemIndex} index={0} title={item} onButtonClick={handleButtonClicked} />
-                })}
-            </div>
+            {model?.isEmpty() ?
+                <Container className="m-5">Words list is empty. Open Controls tab and load words.</Container> :
+                <div>
+                    <MLGuessCardView guess={(game?.guess() ?? '')} expectation={(game?.expectation() ?? '')}
+                        isCorrect={isCorrect} />
+                    <div className="d-grid gap-2">
+                        {game?.variants.map((item, itemIndex) => {
+                            return <MLVariantView key={itemIndex} index={0} title={item} onButtonClick={handleButtonClicked} />
+                        })}
+                    </div>
+                </div>
+            }
         </Container>
     );
 }
