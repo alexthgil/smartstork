@@ -21,6 +21,18 @@ v2.0.0 The application is currently in testing and available to a closed circle 
 - [ ] Server synchronization between desktop and mobile versions
 - [ ] Audio playback
 
+<p>
+  <img src="v2-1.png" width="200"/>
+  <img src="v2-2.png" width="200"/>
+  <img src="v2-3.png" width="200"/>
+</p>
+
+<p>
+  <img src="v2-4.png" width="200"/>
+  <img src="v2-5.png" width="200"/>
+  <img src="v2-6.png" width="200"/>
+</p>
+
 v1.0.0
 
 --== Current Features
