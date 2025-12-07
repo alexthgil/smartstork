@@ -36,3 +36,10 @@ v1.0.0
 - [ ] Export/import backups
 - [ ] Detailed study statistics (words learned)
 - [ ] Settings for quiz
+
+<p>
+  <img src="v1-1.png" width="200"/>
+  <img src="v1-2.png" width="200"/>
+  <img src="v1-3.png" width="200"/>
+</p>
+
